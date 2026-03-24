@@ -24,21 +24,62 @@ public class Sketch {
     new Item(19967, 45)
   };                             
   public int linearSearch(int catNumToFind){
-    //complete this method
+    for (int i = 0; i < items.length; i++) {
+        if (items[i].getCatNum() == catNumToFind) {
+            return items[i].getInventory();
+        }
+    }
     return -1;
-  }
-  public int recursiveLinearSearch(int catNumToFind, int startIndex){
-    //complete this method
+}
+
+public int recursiveLinearSearch(int catNumToFind, int startIndex){
+    if (startIndex >= items.length) {
+        return -1;
+    }
+
+    if (items[startIndex].getCatNum() == catNumToFind) {
+        return items[startIndex].getInventory();
+    }
+
+    return recursiveLinearSearch(catNumToFind, startIndex + 1);
+}
+
+public int binarySearch(int catNumToFind){
+    int low = 0;
+    int high = items.length - 1;
+
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        int midCat = items[mid].getCatNum();
+
+        if (midCat == catNumToFind) {
+            return items[mid].getInventory();
+        } else if (catNumToFind < midCat) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
     return -1;
-  }
-  public int binarySearch(int catNumToFind){
-    //complete this method    
-    return -1;
-  }
-  public int recursiveBinarySearch(int catNumToFind, int nLow, int nHigh){
-    //complete this method    
-    return -1;
-  }
+}
+
+public int recursiveBinarySearch(int catNumToFind, int nLow, int nHigh){
+    if (nLow > nHigh) {
+        return -1;
+    }
+
+    int mid = (nLow + nHigh) / 2;
+    int midCat = items[mid].getCatNum();
+
+    if (midCat == catNumToFind) {
+        return items[mid].getInventory();
+    } else if (catNumToFind < midCat) {
+        return recursiveBinarySearch(catNumToFind, nLow, mid - 1);
+    } else {
+        return recursiveBinarySearch(catNumToFind, mid + 1, nHigh);
+    }
+}
   public void tester(){
     int[] tests = {0, 183, 184, 2370, 15320, 19967, 19968};
     System.out.println();
